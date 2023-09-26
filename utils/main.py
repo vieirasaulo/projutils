@@ -4,8 +4,6 @@ import time
 import inspect
 from functools import wraps
 from typing import Iterable
-
-import yaml
 from rich import print
 from rich.align import Align
 
@@ -25,9 +23,7 @@ def flatten_list(lst: list) -> list:
     return [
         item
         for sublist in lst
-        for item in (
-            flatten_list(sublist) if isinstance(sublist, list) else [sublist]
-        )
+        for item in (flatten_list(sublist) if isinstance(sublist, list) else [sublist])
     ]
 
 
@@ -56,54 +52,6 @@ def replace_backslash(d: dict):
                 newv = newv.replace("\\n", "\n")
             d[k] = newv
     return d
-
-
-def tagm_load_config(file_name: str = "config.yaml") -> dict:
-    """Load config.yaml.
-    File should be in the root directory of the project.
-
-
-    Args:
-        file_name (str, optional): Defaults to 'config.yaml'.
-
-    Returns:
-        config dict
-
-    """
-    root_dir = Path(__file__).parents[1]
-    path = root_dir.joinpath(file_name)
-    with open(path, "r") as f:
-        config = yaml.safe_load(f)
-
-    return config
-
-
-def ffw_params(file_name: str = "config.yaml") -> dict:
-    """Load config.yaml.
-    File should be in the root directory of the project.
-
-
-    Args:
-        file_name (str, optional): Defaults to 'config.yaml'.
-
-    Returns:
-        tuple: ffw params
-            _ENCODING_,
-            _KEYWORDS_,
-            _STRICT_ORDER_,
-            _DELIMITER_,
-            _OFFSET_FILE_
-
-    """
-    config = tagm_load_config()
-
-    return (
-        config["_ENCODING_"],
-        list(config["_KEYWORDS_"].keys()),
-        config["_STRICT_ORDER_"],
-        replace_backslash(config["_KEYWORDS_"]),
-        config["offset"],
-    )
 
 
 def change_file_name(in_path: Path, change: str, suffix: bool = True) -> Path:
@@ -189,9 +137,7 @@ def set_new_version(
     else:
         new_version = str(new_version)
 
-    return folder.joinpath(
-        f"{name}{versioning_suffix}{new_version}{extension}"
-    )
+    return folder.joinpath(f"{name}{versioning_suffix}{new_version}{extension}")
 
 
 def log_time(func):

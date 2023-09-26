@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "chamissostr",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"python.terminal.activateEnvInCurrentTerminal": true,
+		"python.defaultInterpreterPath": ".venv\\Scripts\\python.exe"
+	}
+}
