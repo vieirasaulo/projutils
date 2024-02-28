@@ -4,6 +4,7 @@ import time
 import inspect
 from functools import wraps
 from typing import Iterable
+
 from rich import print
 from rich.align import Align
 
@@ -67,7 +68,7 @@ def change_file_name(in_path: Path, change: str, suffix: bool = True) -> Path:
         Path: path with new file name.
     """
 
-    folder = in_path.parents[0]
+    folder = in_path.resolve().parents[0]
     extension = in_path.suffix
     name = in_path.name.split(extension)[0]
     if suffix:
@@ -88,7 +89,7 @@ def get_last_version(in_path: Path) -> Path:
         Path: path of last version
     """
     in_path = Path(in_path)
-    folder = in_path.parents[0]
+    folder = in_path.resolve().parents[0]
     extension = in_path.suffix
     name = in_path.name.split(extension)[0]
     files = [
@@ -106,38 +107,88 @@ def get_last_version(in_path: Path) -> Path:
 
 
 def set_new_version(
-    in_path: Path, versioning_suffix="_v", overwrite: bool = False
+    in_path: Path,
+    versioning_suffix="_v",
+    overwrite: bool = False,
+    from_last_version: bool = False,
 ) -> Path:
-    """Add sufix to file in case it already exists in the directory.
-
-    Args:
-        in_path (Path): input
-
-    Returns:
-        Path: path to the new last version
     """
+    Set a new version for a file path
+
+
+
+    Parameters
+    ----------
+    in_path : Path
+        The input file path.
+    versioning_suffix : str, optional
+        The suffix to be added to the file name for versioning (default is "_v").
+    overwrite : bool, optional
+        Flag indicating whether to overwrite the file if it already exists (default is False).
+    from_last_version : bool, optional
+        Flag indicating whether to start the versioning from the last version of the file (default is False).
+
+    Returns
+    -------
+    Path
+        The updated file path with the new version.
+    """
+    if isinstance(in_path, str):
+        in_path = Path(in_path)
+
+    if not os.path.exists(in_path):
+        return in_path
 
     if overwrite:
         return in_path
 
-    folder = in_path.parents[0]
-    extension = in_path.suffix
-    name_w_version = in_path.name.split(extension)[0]
+    if from_last_version:
+        in_path = get_last_version(in_path=in_path)
 
-    splitted_name = name_w_version.split("_v")
+    folder = in_path.resolve().parents[0]
+    extension = in_path.suffix
+
+    if extension:
+        name_w_version = in_path.name.split(extension)[0]
+        splitted_name = name_w_version.split(versioning_suffix)
+
+    else:
+        name_w_version = in_path.name
+        splitted_name = name_w_version.split(versioning_suffix)
+
     if len(splitted_name) == 1:
         version = "00"
+
     else:
         version = splitted_name[1]
 
-    name = name_w_version.split("_v")[0]
+    name = name_w_version.split(versioning_suffix)[0]
     new_version = int(version) + 1
     if new_version < 10:
         new_version = f"0{new_version}"
     else:
         new_version = str(new_version)
 
+
+    if "." in name and len(extension) == 0:
+        # ! examples of files here: ".git", ".gitignore"
+        return folder.joinpath(f"{versioning_suffix}{new_version}{name}")
+
     return folder.joinpath(f"{name}{versioning_suffix}{new_version}{extension}")
+
+
+
+
+
+def print_time(fun, msg, t0, t1):
+    start = "\n*"
+    m1 = f" [bold green]{fun.__name__} | {msg}[/bold green] | total elapsed time: "
+    m2 = f"[bold blue]{(t1-t0):.2f}[/bold blue] seconds to run."
+    end = "*\n"
+    msg = f"{start}{m1}{m2}{end}"
+    info = Align.center(msg)
+    print(info)
+
 
 
 def log_time(func):
@@ -170,7 +221,7 @@ def change_extension(in_path: Path, new_extension: str) -> Path:
     Returns:
         Path: path of last version
     """
-    folder = in_path.parents[0]
+    folder = in_path.resolve().parents[0]
     extension = in_path.suffix
     name = in_path.name.split(extension)[0]
     return folder.joinpath(name + new_extension)
@@ -229,3 +280,5 @@ def is_iterable(obj: Iterable) -> bool:
         return True
     except TypeError:
         return False
+
+

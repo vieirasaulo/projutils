@@ -18,6 +18,7 @@ pytest = "^7.4.2"
 pre-commit = "^3.4.0"
 codecov = "^2.1.13"
 coverage = "^7.3.1"
+pydeps = "^1.12.17"
 
 [build-system]
 requires = ["poetry-core"]

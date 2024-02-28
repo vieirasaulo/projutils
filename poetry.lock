@@ -464,6 +464,20 @@ pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
 
 [[package]]
+name = "pydeps"
+version = "1.12.17"
+description = "Display module dependencies"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pydeps-1.12.17-py3-none-any.whl", hash = "sha256:4fb2e86071c78c1b85a1c63745a267d100e91daf6bab2f14331b3c77433b58b4"},
+    {file = "pydeps-1.12.17.tar.gz", hash = "sha256:c308e8355a1e77ff0af899d6f9f1665d4eb07019692dba9fb1dc1cab05df36a4"},
+]
+
+[package.dependencies]
+stdlib-list = "*"
+
+[[package]]
 name = "pygments"
 version = "2.16.1"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -604,6 +618,24 @@ testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8-2020", "ini2toml[l
 testing-integration = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "packaging (>=23.1)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
+name = "stdlib-list"
+version = "0.9.0"
+description = "A list of Python Standard Libraries (2.7 through 3.9)."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "stdlib_list-0.9.0-py3-none-any.whl", hash = "sha256:f79957d59e41930d44afcd81e465f740b9a7a9828707a40e24ab1092b12bd423"},
+    {file = "stdlib_list-0.9.0.tar.gz", hash = "sha256:98eb66135976c96b4ee3f4c0ef0552ebb5a9977ce3028433db79f4738b02af26"},
+]
+
+[package.extras]
+dev = ["build", "stdlib-list[doc,lint,test]"]
+doc = ["furo", "sphinx"]
+lint = ["black", "mypy", "ruff"]
+support = ["sphobjinv"]
+test = ["coverage[toml]", "pytest", "pytest-cov"]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -665,4 +697,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.0"
-content-hash = "a106f1f28b7a7429c13453bad7de9e4a0b690bb89ad06d6f12a8b6a594eca6c8"
+content-hash = "755d47cbff92074f8b4f260f38e8671841477cb2e0cbb7eedaf4d381fa87d63f"
