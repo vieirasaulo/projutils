@@ -178,8 +178,6 @@ def set_new_version(
 
 
 
-
-
 def print_time(fun, msg, t0, t1):
     start = "\n*"
     m1 = f" [bold green]{fun.__name__} | {msg}[/bold green] | total elapsed time: "

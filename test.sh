@@ -1,1 +1,1 @@
-pydeps utils --pylib
+pydeps projutils --pylib

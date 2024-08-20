@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 import pytest
-from utils import set_new_version
+from projutils import set_new_version
 
 import pytest
 

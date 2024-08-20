@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "utils"
+name = "projutils"
 version = "0.1.0"
 description = "A package to handle files, logs, and host common functionalities"
 authors = ["Saulo Silva Vieira"]
@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.10.0"
+python = "^3.10.0"
 rich = "13.5.2"
 pyyaml = "^6.0.1"
 
