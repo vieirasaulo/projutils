@@ -27,7 +27,7 @@ with open(path_no_extension, "w") as f:
 with open(path_no_name, "w") as f:
     f.write(" ")
 
-
+# todo: mock these tests below as in pypest
 class TestSetNewVersion:
 
     # Returns a Path object with the updated file path with a new version.
@@ -70,6 +70,7 @@ class TestSetNewVersion:
         assert in_path == expected_path
 
     # Handles file paths with no parent folder.
+    # todo: fix error here
     def test_path_exists(self):
         in_path = Path("file.txt")
 

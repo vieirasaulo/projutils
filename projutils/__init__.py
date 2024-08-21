@@ -1,1 +1,1 @@
-from projutils.projutils import *
+from projutils.utils import *
